@@ -8,9 +8,13 @@ async function main() {
   const tokenContract = await tokenContractFactory.deploy();
   await tokenContract.deployed();
   console.log(`Contract deployed at ${tokenContract.address}`);
+
+  // fetch role code
+  const minterRoleCode = await tokenContract.MINTER_ROLE();
+
   // Give role
   const roleTx = await tokenContract.grantRole(
-    MINTER_ROLE,
+    minterRoleCode,
     accounts[2].address
   );
   await roleTx.wait();
